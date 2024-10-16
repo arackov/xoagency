@@ -1,0 +1,261 @@
+/* Основные стили */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* Контейнер для кнопок и фильтров */
+.filter-container-left {
+    display: flex;
+    justify-content: flex-start; /* Расположение по левому краю */
+    margin: 20px;
+}
+
+.styled-button, .filter {
+    background-color: #f2f3f5; /* Цвет как на картинке */
+    border: 1px solid #d1d1d1;
+    padding: 10px 20px;
+    font-size: 14px; /* Размер текста как на картинке */
+    color: #5c5c5c; /* Текст серый */
+    border-radius: 6px;
+    width: 220px; /* Одинаковая ширина для всех элементов */
+    height: 40px; /* Высота как на картинке */
+    margin-right: 10px; /* Отступ между элементами */
+}
+
+.styled-button:hover, .filter:hover {
+    background-color: #e0e0e0;
+}
+
+/* Специальные стили для select */
+.filter {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"%3E%3Cpath fill="%235c5c5c" d="M7 10l5 5 5-5H7z"/%3E%3C/svg%3E'); /* Добавляем иконку стрелки */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    padding-right: 30px; /* Увеличиваем отступ справа для стрелки */
+}
+
+.filter:hover {
+    background-color: #e0e0e0;
+}
+
+/* Остальные стили без изменений */
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #f3f3f3;
+    font-size: 2rem;
+}
+
+/* Стили для формы */
+form {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #111;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #222;
+    color: #fff;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+input[type="number"], input[type="date"], input[type="text"], select {
+    border: 1px solid #444;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #f3f3f3;
+}
+
+/* Кнопки */
+button {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-right: 10px;
+    background-color: #f3f3f3;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #d4d4d4;
+    transform: translateY(-2px);
+}
+
+button[type="button"] {
+    margin-top: 10px;
+    background-color: #f3f3f3;
+}
+
+button[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+/* Радиокнопки */
+.radio-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.radio-group label {
+    margin-left: 10px;
+    margin-right: 20px;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Выровненные радиокнопки */
+.radio-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Шапка */
+.header {
+    background-color: #000;
+    padding: 10px;
+    text-align: center;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: center;
+    background-color: #000;
+    padding: 10px 0;
+}
+
+.nav-link {
+    color: #000;
+    background-color: #ffc107;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #e0a800;
+}
+
+/* Тени и плавные переходы для полей */
+input, select, textarea {
+    box-shadow: 0px 2px 5px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border: 1px solid #f3f3f3;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.15);
+}
+
+/* Стили для таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table td, table th {
+    padding: 10px;
+    border: 1px solid #fff;
+    text-align: left;
+}
+
+/* Стили для кнопки удаления */
+.delete-cell {
+    text-align: center;
+    width: 50px;
+}
+
+.delete-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #FF4C39;
+}
+
+.delete-btn:hover {
+    background-color: #FF4C39;
+}
+
+/* Кнопка редактирования */
+button#editTableBtn {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #ffc107;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button#editTableBtn:hover {
+    background-color: #e0a800;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    form {
+        width: 90%;
+        padding: 15px;
+    }
+
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+}

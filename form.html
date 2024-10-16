@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Форма добавления данных</title>
+</head>
+<body>
+    <div class="header">
+        <div class="nav-container">
+            <a class="nav-link" href="index.html">Главная</a>
+            <a class="nav-link" href="form.html">Добавить данные</a>
+            <a class="nav-link" href="table.html">Реестр ОРД</a>
+            <a class="nav-link" href="login.html">Логин</a>
+            <a class="nav-link" href="report.html">Отчёт</a>
+            <a class="nav-link" href="database.html">База данных</a> 
+        </div>
+    </div>
+
+    <h1>Добавить данные</h1>
+    <form id="dataForm">
+        
+        <label for="agency">Агентство:</label>
+        <select id="agency" name="agency">
+            <option value="Черных А.В.">Черных А.В.</option>
+            <option value="Родионовская Е.Ю.">Родионовская Е.Ю.</option>
+        </select>
+
+        <label for="ord">ОРД:</label>
+        <select id="ord" name="ord">
+            <option value="Медиаскаут">Медиаскаут</option>
+            <option value="ВК">ВК</option>
+        </select>
+
+        <label for="project">Проект:</label>
+        <input type="text" id="project" name="project">
+        
+        <label for="client">Клиент:</label>
+        <select id="client" name="client"></select>
+        
+        <label for="contract">Реквизиты расходного договора:</label>
+        <input type="text" id="contract" name="contract">
+        
+        <label for="actDetails">Реквизиты акта:</label>
+        <input type="text" id="actDetails" name="actDetails">
+        
+        <label for="income">Сумма:</label>
+        <input type="number" id="income" name="income">
+        
+        <label for="advertiser">Рекламодатель:</label>
+        <select id="advertiser" name="advertiser"></select>
+        
+        <label for="initialContract">Реквизиты изначального договора:</label>
+        <input type="text" id="initialContract" name="initialContract">
+        
+        <label for="nds">НДС:</label>
+        <select id="nds" name="nds">
+            <option value="Да">Да</option>
+            <option value="Нет">Нет</option>
+        </select>
+
+        <div id="bloggerFields">
+            <div class="blogger-field-group" id="bloggerField_1">
+                <label for="blogger_1">Блогер:</label>
+                <select id="blogger_1" name="blogger_1"></select>
+                <label for="expenseContract_1">Реквизиты расходного договора:</label>
+                <input type="text" id="expenseContract_1" name="expenseContract_1">
+                <label for="expenseAct_1">Реквизиты расходного акта:</label>
+                <input type="text" id="expenseAct_1" name="expenseAct_1">
+                <label for="bloggerFee_1">Сумма услуг блогера (рублей):</label>
+                <input type="text" id="bloggerFee_1" name="bloggerFee_1">
+                <label for="token_1">Токен (необязательно):</label>
+                <input type="text" id="token_1" name="token_1">
+                <label for="publicationLink_1">Ссылка на публикацию:</label>
+                <input type="text" id="publicationLink_1" name="publicationLink_1">
+                <label for="removeUntil_1">Не удалять до:</label>
+                <input type="date" id="removeUntil_1" name="removeUntil_1">
+                <label for="publicationDate_1">Дата публикации:</label>
+                <input type="date" id="publicationDate_1" name="publicationDate_1">
+            </div>
+        </div>
+
+        <button type="button" id="addBloggerBtn">Добавить блогера</button>
+        <button type="button" id="removeBloggerBtn">Удалить блогера</button>
+        <button type="submit">Добавить данные</button>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>

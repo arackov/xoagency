@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>База данных</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0F0F0F;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #1A1A1A;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 10px 20px;
+            background-color: #F5D742;
+            color: #0F0F0F;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #FFC107;
+        }
+
+        /* Таблица */
+        table {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #1A1A1A;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            color: white;
+            border-bottom: 1px solid #333;
+        }
+
+        th {
+            background-color: #333;
+        }
+
+        .btn {
+            background-color: #FF6F61;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #FF4C39;
+        }
+
+        .edit-form, .add-form {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .edit-form input, .add-form input {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            background-color: #222;
+            color: white;
+        }
+
+        .save-btn, .add-btn {
+            padding: 10px 20px;
+            background-color: #5C99F2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .save-btn:hover, .add-btn:hover {
+            background-color: #3D82D8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="nav-container">
+            <a class="nav-link" href="index.html">Главная</a>
+            <a class="nav-link" href="form.html">Добавить данные</a>
+            <a class="nav-link" href="table.html">Реестр ОРД</a>
+            <a class="nav-link" href="login.html">Логин</a>
+            <a class="nav-link" href="report.html">Отчёт</a>
+            <a class="nav-link" href="database.html">База данных</a>
+        </div>
+    </div>
+
+    <h1 style="text-align: center;">База данных</h1>
+
+    <!-- Кнопка для добавления новых записей -->
+    <button class="btn" onclick="toggleAddForm()">Добавить новую запись</button>
+
+    <h2 style="text-align: center;">Клиенты</h2>
+    <table id="clientsTable">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>ИНН</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Сюда будут добавляться клиенты -->
+        </tbody>
+    </table>
+
+    <h2 style="text-align: center;">Блогеры</h2>
+    <table id="bloggersTable">
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>ИНН</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Сюда будут добавляться блогеры -->
+        </tbody>
+    </table>
+
+    <h2 style="text-align: center;">Рекламодатели</h2>
+    <table id="advertisersTable">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>ИНН</th>
+                <th>Действие</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Сюда будут добавляться рекламодатели -->
+        </tbody>
+    </table>
+
+    <!-- Форма для редактирования -->
+    <div class="edit-form" id="editForm">
+        <h2>Редактировать данные</h2>
+        <input type="text" id="editName" placeholder="Название/Имя">
+        <input type="text" id="editInn" placeholder="ИНН">
+        <button class="save-btn" onclick="saveChanges()">Сохранить</button>
+    </div>
+
+    <!-- Форма для добавления новой записи -->
+    <div class="add-form" id="addForm">
+        <h2>Добавить новую запись</h2>
+        <select id="addType">
+            <option value="clientsTable">Клиент</option>
+            <option value="bloggersTable">Блогер</option>
+            <option value="advertisersTable">Рекламодатель</option>
+        </select>
+        <input type="text" id="addName" placeholder="Название/Имя">
+        <input type="text" id="addInn" placeholder="ИНН">
+        <button class="add-btn" onclick="addNewEntry()">Добавить</button>
+    </div>
+
+    <script>
+        // Загрузка данных из localStorage
+        let clients = JSON.parse(localStorage.getItem("clients")) || [];
+        let bloggers = JSON.parse(localStorage.getItem("bloggers")) || [];
+        let advertisers = JSON.parse(localStorage.getItem("advertisers")) || [];
+
+        let editIndex = null;
+        let editTable = '';
+
+        console.log("Данные клиентов загружены:", clients);
+        console.log("Данные блогеров загружены:", bloggers);
+        console.log("Данные рекламодателей загружены:", advertisers);
+
+        // Функция для отображения данных в таблице
+        function loadTableData(data, tableBody) {
+            tableBody.innerHTML = ''; // Очищаем таблицу
+            console.log("Отображение данных для таблицы", tableBody.id);
+            data.forEach((item, index) => {
+                let row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.inn}</td>
+                    <td>
+                        <button class="btn" onclick="editEntry('${tableBody.id}', ${index})">Редактировать</button>
+                        <button class="btn" onclick="removeEntry('${tableBody.id}', ${index})">Удалить</button>
+                    </td>
+                `;
+            });
+        }
+
+        // Отображаем данные для клиентов, блогеров и рекламодателей
+        const clientsTableBody = document.getElementById("clientsTable").getElementsByTagName("tbody")[0];
+        const bloggersTableBody = document.getElementById("bloggersTable").getElementsByTagName("tbody")[0];
+        const advertisersTableBody = document.getElementById("advertisersTable").getElementsByTagName("tbody")[0];
+
+        loadTableData(clients, clientsTableBody);
+        loadTableData(bloggers, bloggersTableBody);
+        loadTableData(advertisers, advertisersTableBody);
+
+        // Функция удаления записи
+        function removeEntry(tableId, index) {
+            console.log("Удаление записи из", tableId, "с индексом", index);
+            if (tableId === "clientsTable") {
+                clients.splice(index, 1);
+                localStorage.setItem("clients", JSON.stringify(clients));
+                loadTableData(clients, clientsTableBody);
+            } else if (tableId === "bloggersTable") {
+                bloggers.splice(index, 1);
+                localStorage.setItem("bloggers", JSON.stringify(bloggers));
+                loadTableData(bloggers, bloggersTableBody);
+            } else if (tableId === "advertisersTable") {
+                advertisers.splice(index, 1);
+                localStorage.setItem("advertisers", JSON.stringify(advertisers));
+                loadTableData(advertisers, advertisersTableBody);
+            }
+        }
+
+        // Функция редактирования записи
+        function editEntry(tableId, index) {
+            console.log("Редактирование записи из", tableId, "с индексом", index);
+            const editForm = document.getElementById('editForm');
+            editForm.style.display = 'block';
+
+            if (tableId === "clientsTable") {
+                editName.value = clients[index].name;
+                editInn.value = clients[index].inn;
+            } else if (tableId === "bloggersTable") {
+                editName.value = bloggers[index].name;
+                editInn.value = bloggers[index].inn;
+            } else if (tableId === "advertisersTable") {
+                editName.value = advertisers[index].name;
+                editInn.value = advertisers[index].inn;
+            }
+
+            editIndex = index;
+            editTable = tableId;
+        }
+
+        // Сохранение изменений
+        function saveChanges() {
+            console.log("Сохранение изменений для таблицы", editTable, "с индексом", editIndex);
+            const newName = document.getElementById('editName').value;
+            const newInn = document.getElementById('editInn').value;
+
+            if (editTable === "clientsTable") {
+                clients[editIndex].name = newName;
+                clients[editIndex].inn = newInn;
+                localStorage.setItem("clients", JSON.stringify(clients));
+                loadTableData(clients, clientsTableBody);
+            } else if (editTable === "bloggersTable") {
+                bloggers[editIndex].name = newName;
+                bloggers[editIndex].inn = newInn;
+                localStorage.setItem("bloggers", JSON.stringify(bloggers));
+                loadTableData(bloggers, bloggersTableBody);
+            } else if (editTable === "advertisersTable") {
+                advertisers[editIndex].name = newName;
+                advertisers[editIndex].inn = newInn;
+                localStorage.setItem("advertisers", JSON.stringify(advertisers));
+                loadTableData(advertisers, advertisersTableBody);
+            }
+
+            document.getElementById('editForm').style.display = 'none';
+        }
+
+        // Функция добавления новой записи
+        function addNewEntry() {
+            console.log("Добавление новой записи");
+            const addName = document.getElementById('addName').value;
+            const addInn = document.getElementById('addInn').value;
+            const addType = document.getElementById('addType').value;
+
+            if (addType === "clientsTable") {
+                clients.push({ name: addName, inn: addInn });
+                localStorage.setItem("clients", JSON.stringify(clients));
+                loadTableData(clients, clientsTableBody);
+            } else if (addType === "bloggersTable") {
+                bloggers.push({ name: addName, inn: addInn });
+                localStorage.setItem("bloggers", JSON.stringify(bloggers));
+                loadTableData(bloggers, bloggersTableBody);
+            } else if (addType === "advertisersTable") {
+                advertisers.push({ name: addName, inn: addInn });
+                localStorage.setItem("advertisers", JSON.stringify(advertisers));
+                loadTableData(advertisers, advertisersTableBody);
+            }
+
+            document.getElementById('addForm').style.display = 'none';
+        }
+
+        // Показать/скрыть форму для добавления
+        function toggleAddForm() {
+            const addForm = document.getElementById('addForm');
+            addForm.style.display = addForm.style.display === 'none' || addForm.style.display === '' ? 'block' : 'none';
+        }
+    </script>
+
+</body>
+</html>
